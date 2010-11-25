@@ -8,58 +8,40 @@ var s = {
   }
 };
 //new way of thinking about omniture routing
-(function($) {
-  $.omniture('pageview', /^/, { pageName: "company:home" });
-  $.omniture('pageview', /about/, function(params) {
-    return {
-      
-    };
-  });
 
-  $.omniture('link', '#btn-register', 'click', function() {
-    return {
-      eVar2: "evar2 is set",
-      prop1: "prop1 is set to"
+
+$(document).ready(function() {
+    var defaultOmnitureParams = {
+      pageName: "Home",
+      server: "",
+      channel: "",
+      pageType: "",
+      prop1: "",
+      prop2: "",
+      /* eCommerce Variables */
+      state: "",
+      zip: "",
+      events: "",
+      products: "",
+      purchaseID: "",
+      eVar1: "",
+      eVar2: ""
     };
-  });
   
-  /*
-  $.omniture({
-    pages: [
-      { //homepage
-        pattern: /^/, 
-        properties: function() {
-          return {
-            pageName: "companyName:home"
-          };
-        }
-      },
-      { //about 
-        pattern: /about/,
-        properties: {
-          pageName: "companyName:about"
-        }
-      },
-      { //register 
-        pattern: /register/,
-        properties: {
-          pageName: "companyName:register"
-        }
-      }
-    ],
-    links: [
-      {
-        pattern: "a.btn-register",
-        event: "click",
-        properties: function(caller) {
-          return {
-            prop1: caller.title,
-            eVar2: caller.href
-          };
-        }
-      }
-    ]
-  });
-  
-  */
-})(jQuery);
+    var omniture = $(document).Omniture(defaultOmnitureParams);
+    //sinatra-style + express-style routing!
+    omniture.view("index.html", function() {
+      return { pageName: "CompanySite:Home", eVar1: "This is eVar1",eVar2: "This is eVar2" };
+    });
+    omniture.view("about.html", function() {
+      return { pageName: "CompanySite:About", eVar1: "This is eVar1",eVar2: "This is eVar2" };
+    });
+    omniture.view("register.html", function() {
+      return { pageName: "CompanySite:Register", eVar1: "This is eVar1",eVar2: "This is eVar2" };
+    });
+    
+    omniture.link($(".btn"), "click", function() {
+      console.log(this);
+    });
+
+});
