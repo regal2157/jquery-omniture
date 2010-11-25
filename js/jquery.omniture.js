@@ -1,6 +1,7 @@
 (function( $ ) {
   $.fn.Omniture = function( config ) {
     var defaults = {
+      /* Generic defaults */
       pageName: "Home",
       server: "",
       channel: "",
@@ -56,41 +57,39 @@
       if (typeof(element) != 'object') throw new Error("invalid 'element': this argument must be an object");
       if (typeof(event) != 'string') throw new Error("invalid 'event': this argument must be a string");
       
-      var properties = null;
-      if (typeof(fn) == 'function') {
-        properties = fn();
-      } else if (typeof(fn) == 'object') {
-        properties = fn;
-      }
-
-      
       $(element).bind(event, function() {
-        console.log(this);
+
+        var properties = null;
+        if (typeof(fn) == 'function') {
+          var clicked = $(this);
+          properties = fn(clicked);
+        } else if (typeof(fn) == 'object') {
+          properties = fn;
+        }
+        
         var linkVars = [];
         var linkEvents = [];
-        var linkProducts = [];
-        
+
         var tmp = {};
-        
         for (key in properties) {
-          if(key.indexOf("prop" == 0) || key.indexOf("eVar" == 0)) linkVars.push(key);
-          if(key.indexOf("event") == 0) linkEvents.push(key);
+          if (key.indexOf("prop" == 0) || key.indexOf("eVar" == 0)) linkVars.push(key);
+          if (key.indexOf("event") == 0) linkEvents.push(key);          
           tmp[key] = s[key];
-          $.extend(s, properties);
+          s[key] = properties[key];
         }
         
         s.linkTrackVars = linkVars.length ? linkVars.join(",") : "None";
         s.linkTrackEvents = linkEvents.length ? linkEvents.join(",") : "None";
-        
-        console.log(s);
-        
-        if(this.attr("href")) {
+          
+        if (this.attr("href")) {
           s.tl(this.href, 'o');
         } else {
           s.tl();
         }
         
-        return false;
+        for (key in tmp) {
+          s[key] = tmp[key];
+        }
         
       });
 
