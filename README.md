@@ -2,7 +2,7 @@
 
 Provides a convenient way for developers to add SiteCatalyst/Omniture tracking to pages and DOM elements.
 
-## Tutorial
+## Tutorial and Example Code
 
 All you need to do is pass an object into $.omniture({}) with your specifications. 
 
@@ -13,8 +13,27 @@ All you need to do is pass an object into $.omniture({}) with your specification
 <code>
 $(document).ready(function() {
   var omniture = $(document).Omniture();
+  omniture.view("index.html", function() {
+    return { pageName: "My Page Name " };
+  });
+  omniture.link($(".btn-register"), "click", function() {
+    return { events: "event1,event2,event3", eVar3: "registration" };
+  });
 });
 </code>
+
+## API
+
+### omniture.view()
+
+* <code>{ String } route</code> - A human readable string representing the location you want tracked. This is a string but gets transformed into a regex.
+* <code>{ Function } callback</code> - The callback you want executed that returns the metrics properties and sends them off to SiteCatalyst (Omniture).
+
+### omniture.link()
+
+* <code>{ String | DOM Element } element</code> - The targeted node you want to listen to. eg/ $("button") or "#btn-register"
+* <code>{ String } event</code> - The event you want to listen to on a particular node. eg/ "click", "hover", "mouseup", "keydown"
+* <code>{ Function} callback</code> - The callback you want executed that returns the metrics properties and sends them off to SiteCatalyst (Omniture).
 
 ## Limitations
 
