@@ -11,7 +11,7 @@ All you need to do is pass an object into $.omniture({}) with your specification
 "links" is a mapping for DOM elements that you want to track. For example, if a user clicked a promotion module, you'd want to track this in Omniture through their pseudo request API call (s.tl).
 
 <code>
-  $.omniture({
+  var map = {
     pages: [
       { //homepage
         pattern: /^/, 
@@ -46,7 +46,9 @@ All you need to do is pass an object into $.omniture({}) with your specification
         }
       }
     ]
-  });
+  };
+  
+  $.omniture(map);
 </code>
 
 ## Limitations
