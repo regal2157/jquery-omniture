@@ -21,8 +21,8 @@ $(document).ready(function() {
       return { pageName: "DunderMifflin:Register", eVar1: "This is eVar1",eVar2: "This is eVar2" };
     });
     
-    omniture.link($(".btn"), "click", function() {
-      console.log(this);
+    omniture.link($("a"), "click", function() {
+      return { event2: "login", prop3: "prop 3", eVar4: "evar4" };
     });
 
 });
