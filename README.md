@@ -2,13 +2,24 @@
 
 Provides a convenient way for developers to add SiteCatalyst/Omniture tracking to pages and DOM elements.
 
+## jQuery Omniture Plugin API
+
+### omniture.view()
+
+Provides the capability to apply pageview metrics to a particular route. This is a facade for <code>s.t()</code>.
+
+* <code>{ String } route</code> - A human readable string representing the location you want tracked. This is a string but gets transformed into a regex.
+* <code>{ Function } callback</code> - The callback you want executed that returns the metrics properties and sends them off to SiteCatalyst (Omniture).
+
+### omniture.link()
+
+Provides the capability to execute pseudo synchronous requests (img) to Omniture. This is a facade for <code>s.tl()</code>.
+
+* <code>{ String | DOM Element } element</code> - The targeted node you want to listen to. eg/ $("button") or "#btn-register"
+* <code>{ String } event</code> - The event you want to listen to on a particular node. eg/ "click", "hover", "mouseup", "keydown"
+* <code>{ Function} callback</code> - The callback you want executed that returns the metrics properties and sends them off to SiteCatalyst (Omniture).
+
 ## Tutorial and Example Code
-
-All you need to do is pass an object into $.omniture({}) with your specifications. 
-
-"pages" is an array of pages that you want track. As you can see there's an item for home, about, and register. These entries correspond to regex being used against the window.location. In the end, this calls s.t(), which is Omniture API call for a page view.
-
-"links" is a mapping for DOM elements that you want to track. For example, if a user clicked a promotion module, you'd want to track this in Omniture through their pseudo request API call (s.tl).
 
 <code>
 $(document).ready(function() {
@@ -21,19 +32,6 @@ $(document).ready(function() {
   });
 });
 </code>
-
-## API
-
-### omniture.view()
-
-* <code>{ String } route</code> - A human readable string representing the location you want tracked. This is a string but gets transformed into a regex.
-* <code>{ Function } callback</code> - The callback you want executed that returns the metrics properties and sends them off to SiteCatalyst (Omniture).
-
-### omniture.link()
-
-* <code>{ String | DOM Element } element</code> - The targeted node you want to listen to. eg/ $("button") or "#btn-register"
-* <code>{ String } event</code> - The event you want to listen to on a particular node. eg/ "click", "hover", "mouseup", "keydown"
-* <code>{ Function} callback</code> - The callback you want executed that returns the metrics properties and sends them off to SiteCatalyst (Omniture).
 
 ## Limitations
 
