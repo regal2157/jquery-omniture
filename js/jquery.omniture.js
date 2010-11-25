@@ -1,7 +1,20 @@
 (function( $ ) {
   $.fn.Omniture = function( config ) {
     var defaults = {
-      
+      pageName: "Home",
+      server: "",
+      channel: "",
+      pageType: "",
+      prop1: "",
+      prop2: "",
+      /* eCommerce Variables */
+      state: "",
+      zip: "",
+      events: "",
+      products: "",
+      purchaseID: "",
+      eVar1: "",
+      eVar2: ""
     };
     
     if ( config ) $.extend(defaults, config);

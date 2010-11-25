@@ -11,44 +11,9 @@ All you need to do is pass an object into $.omniture({}) with your specification
 "links" is a mapping for DOM elements that you want to track. For example, if a user clicked a promotion module, you'd want to track this in Omniture through their pseudo request API call (s.tl).
 
 <code>
-  var map = {
-    pages: [
-      { //homepage
-        pattern: /^/, 
-        properties: function() {
-          return {
-            pageName: "companyName:home"
-          };
-        }
-      },
-      { //about 
-        pattern: /about/,
-        properties: {
-          pageName: "companyName:about"
-        }
-      },
-      { //register 
-        pattern: /register/,
-        properties: {
-          pageName: "companyName:register"
-        }
-      }
-    ],
-    links: [
-      {
-        pattern: "a.btn-register",
-        event: "click",
-        properties: function(caller) {
-          return {
-            prop1: caller.title,
-            eVar2: caller.href
-          };
-        }
-      }
-    ]
-  };
-  
-  $.omniture(map);
+$(document).ready(function() {
+  var omniture = $(document).Omniture();
+});
 </code>
 
 ## Limitations
