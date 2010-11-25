@@ -23,10 +23,6 @@ Provides the capability to execute pseudo synchronous requests (img) to Omniture
 
 Checkout <code>js/MetricsMap.js</code> for a solid example of how to use this plugin.
 
-## Limitations
-
-* Does not provide the ability to observe custom objects or events
-
 ## MIT Licence
 
 jQuery Omniture Plugin
