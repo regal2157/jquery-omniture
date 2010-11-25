@@ -21,7 +21,6 @@ Provides the capability to execute pseudo synchronous requests (img) to Omniture
 
 ## Tutorial and Example Code
 
-<code>
 $(document).ready(function() {
   var omniture = $(document).Omniture();
   omniture.view("index.html", function() {
@@ -31,7 +30,6 @@ $(document).ready(function() {
     return { events: "event1,event2,event3", eVar3: "registration" };
   });
 });
-</code>
 
 ## Limitations
 
