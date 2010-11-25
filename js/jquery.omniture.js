@@ -27,8 +27,8 @@
       @param { Function | Object } fn
     */
     this.view = function(pattern, fn) {
-      if (!s || typeof(s) == 'undefined') throw new Error("omniture tracking object does not exist");
-      if (typeof(pattern) != 'string') throw new Error("invalid 'pattern': this argument must be a string");
+      if (typeof(s) == 'undefined' || !s) return false;
+      if (typeof(pattern) != 'string') return false;
 
       var properties = null;
       if (typeof(fn) == 'function') {
@@ -53,9 +53,10 @@
       @param { Function | Object } fn
     */
     this.link = function(element, event, fn) {
-      if (!s || typeof(s) == 'undefined') throw new Error("omniture tracking object does not exist");
-      if (typeof(element) != 'object') throw new Error("invalid 'element': this argument must be an object");
-      if (typeof(event) != 'string') throw new Error("invalid 'event': this argument must be a string");
+      if (typeof(s) == 'undefined' || !s) return false;
+      if (typeof(element) != 'object') return false;
+      if (typeof(event) != 'string') return false;
+      if (typeof(fn) != 'function' || typeof(fn) != 'object') return false;
       
       $(element).bind(event, function() {
 
@@ -81,7 +82,7 @@
         s.linkTrackVars = linkVars.length ? linkVars.join(",") : "None";
         s.linkTrackEvents = linkEvents.length ? linkEvents.join(",") : "None";
           
-        if (this.attr("href")) {
+        if (typeof(clicked) != 'undefined' || clicked.attr("href")) {
           s.tl(this.href, 'o');
         } else {
           s.tl();
