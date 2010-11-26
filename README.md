@@ -21,8 +21,31 @@ Provides the capability to execute pseudo synchronous requests (img) to Omniture
 
 ## Tutorial and Example Code
 
-Checkout <code>js/MetricsMap.js</code> for a solid example of how to use this plugin.
+<pre>
+  $(document).ready(function() {
+      var config = {
+        pageName: "DunderMifflin:Home"
+      };
 
+      var omniture = $(document).Omniture(config);
+
+      //sinatra-style + express-style routing!
+      
+      omniture.view("index.html", function() {
+        return { pageName: "DunderMifflin:Home", eVar1: "This is eVar1",eVar2: "This is eVar2" };
+      });
+      omniture.view("about", function() {
+        return { pageName: "DunderMifflin:About", eVar1: "This is eVar1",eVar2: "This is eVar2" };
+      });
+      omniture.view("register", function() {
+        return { pageName: "DunderMifflin:Register", eVar1: "This is eVar1",eVar2: "This is eVar2" };
+      });
+
+      omniture.link($("a"), "click", function(element) {
+        return { event2: "login", prop3: element.attr('title'), eVar4: "evar4" };
+      });
+  });
+</pre>
 ## MIT Licence
 
 jQuery Omniture Plugin

@@ -1,4 +1,5 @@
 //mock object for omniture api, usually, they call it "s"
+//REMOVE THIS IF YOU HAVE THE OMNITURE LIBRARY LOADED!
 var s = {
   tl: function() { console.log("Pseudo Page Request: ", s); },
   t: function() { console.log("Page View: ", s); }
