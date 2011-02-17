@@ -1,21 +1,21 @@
 (function( $ ) {
   $.fn.Omniture = function( config ) {
     var defaults = {
-      /* Generic defaults */
-      pageName: "Home",
-      server: "",
-      channel: "",
-      pageType: "",
-      prop1: "",
-      prop2: "",
-      /* eCommerce Variables */
-      state: "",
-      zip: "",
-      events: "",
-      products: "",
-      purchaseID: "",
-      eVar1: "",
-      eVar2: ""
+        /* Generic defaults */
+        pageName      : "Home"
+      , server        : ""
+      , channel       : ""
+      , pageType      : ""
+      , prop1         : ""
+      , prop2         : ""
+        /* eCommerce Variables */
+      , state         : ""
+      , zip           : ""
+      , events        : ""
+      , products      : ""
+      , purchaseID    : ""
+      , eVar1         : ""
+      , eVar2         : ""
     };
     
     if ( config ) $.extend(defaults, config);
@@ -43,6 +43,7 @@
         $.extend(s, properties);
         s.t();
       }
+      return true;
     };
     
     /* 
@@ -93,9 +94,7 @@
         }
         
       });
-
-
-
+      return true;
     };
     
     return this;
