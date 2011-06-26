@@ -80,6 +80,8 @@
           s[key] = properties[key];
         }
         
+        if (linkEvents.length) linkVars.push('events');
+        
         s.linkTrackVars = linkVars.length ? linkVars.join(",") : "None";
         s.linkTrackEvents = linkEvents.length ? linkEvents.join(",") : "None";
           
