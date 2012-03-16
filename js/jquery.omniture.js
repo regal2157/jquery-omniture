@@ -1,104 +1,87 @@
-(function( $ ) {
-  $.fn.Omniture = function( config ) {
-    var defaults = {
-        /* Generic defaults */
-        pageName      : "Home"
-      , server        : ""
-      , channel       : ""
-      , pageType      : ""
-      , prop1         : ""
-      , prop2         : ""
-        /* eCommerce Variables */
-      , state         : ""
-      , zip           : ""
-      , events        : ""
-      , products      : ""
-      , purchaseID    : ""
-      , eVar1         : ""
-      , eVar2         : ""
-    };
+$.omniture = function( config ) {
+  var defaults = {
+    // Generic Defaults
+    pageName : "Home"
+    // Define what defaults you want here, if you want.
+    /*
+    channel : "",
+    pageType : "",
+    prop1 : "",
+    prop2 : "",
     
-    if ( config ) $.extend(defaults, config);
-    
-    /* 
-      Provides the capability to apply pageview metrics to a particular route.
-      
-      @param { String } pattern
-      @param { Function | Object } fn
+    // ECOM Variables
+    state : "",
+    zip : "",
+    events : "",
+    products : "",
+    purchaseID : "",
+    eVar1 : "",
+    eVar2 : ""
     */
-    this.view = function(pattern, fn) {
-      if (typeof(s) == 'undefined' || !s) return false;
-      if (typeof(pattern) != 'string') return false;
-
-      var properties = null;
-      if (typeof(fn) == 'function') {
-        properties = fn();
-      } else if (typeof(fn) == 'object') {
-        properties = fn;
-      }
-      
-      pattern = new RegExp(pattern);
-    
-      if (pattern.test(window.location.href)) {
-        $.extend(s, properties);
-        s.t();
-      }
-      return true;
-    };
-    
-    /* 
-      Provides the capability to execute pseudo synchronous requests (img) to Omniture.
-      
-      @param { DOM | String } element
-      @param { String } event
-      @param { Function | Object } fn
-    */
-    this.link = function(element, event, fn) {
-      if (typeof(s) == 'undefined' || !s) return false;
-      if (typeof(element) != 'object') return false;
-      if (typeof(event) != 'string') return false;
-      if (typeof(fn) != 'function' || typeof(fn) != 'object') return false;
-      
-      $(element).bind(event, function() {
-
-        var properties = null;
-        if (typeof(fn) == 'function') {
-          var clicked = $(this);
-          properties = fn(clicked);
-        } else if (typeof(fn) == 'object') {
-          properties = fn;
-        }
-        
-        var linkVars = [];
-        var linkEvents = [];
-
-        var tmp = {};
-        for (key in properties) {
-          if (key.indexOf("prop" == 0) || key.indexOf("eVar" == 0)) linkVars.push(key);
-          if (key.indexOf("event") == 0) linkEvents.push(key);          
-          tmp[key] = s[key];
-          s[key] = properties[key];
-        }
-        
-        if (linkEvents.length) linkVars.push('events');
-        
-        s.linkTrackVars = linkVars.length ? linkVars.join(",") : "None";
-        s.linkTrackEvents = linkEvents.length ? linkEvents.join(",") : "None";
-          
-        if (typeof(clicked) != 'undefined' || clicked.attr("href")) {
-          s.tl(this.href, 'o');
-        } else {
-          s.tl();
-        }
-        
-        for (key in tmp) {
-          s[key] = tmp[key];
-        }
-        
-      });
-      return true;
-    };
-    
-    return this;
   };
-})( jQuery );
+
+  if( config )
+    $.extend(defaults, config);
+
+  /**
+   * Provides the capability to apply pageview metrics to a particular action.
+   * @param { obj } config
+   */
+  this.view = function( viewConfig ) {
+    if( typeof(s) == 'undefined' || !s ) return false;
+
+    if( viewConfig )
+      $.extend(defaults, viewConfig);
+
+    var properties = defaults;
+    
+    $.extend(s, properties);
+
+    var s_code = s.t();
+    /*
+    if( s_code ) document.write(s_code);
+    if( navigator.appVersion.indexOf('MSIE') >= 0) document.write(unescape('%3C')+'\!-'+'-');
+    */
+  }
+
+  /**
+   * Provides the capability to execute pseudo synchronous requests (img) to Omniture.
+   * @param { obj } linkConfig
+   * @param { string } linkName
+   * @param { string } linkType : options are e, o, d [exit, other, download]
+   */
+  this.link = function ( linkConfig, linkName, linkType ) {
+    if(typeof(s) == 'undefined' || !s) return false;
+
+    if( linkConfig )
+      $.extend(defaults, linkConfig);
+
+    var properties = defaults;
+    var linkVars = [];
+    var linkEvents = [];
+    var tmp = {};
+
+    for( key in properties ) {
+      if( key.indexOf("prop" == 0) || key.indexOf("eVar" == 0))
+        linkVars.push(key);
+      if( key.indexOf("event") == 0)
+        linkEvents.push(key);
+      tmp[key] = s[key];
+      s[key] = properties[key];
+    }
+
+    if( linkEvents.length )
+      linkVars.push('events');
+
+    s.linkTrackVars = linkVars.length ? linkVars.join(",") : "None";
+    s.linkTrackEvents = linkEvents.length ? linkEvents.join(",") : "None";
+
+    var lt = this.href!=null?s.lt(this.href):"";
+    if(lt == "") { s.tl(this, linkType, linkName) }
+
+    for (key in tmp) {
+      s[key] = tmp[key];
+    }
+  }
+  return this;
+}

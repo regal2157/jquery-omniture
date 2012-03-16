@@ -1,6 +1,6 @@
 # jQuery Omniture Plugin
 
-Provides a convenient way for developers to add SiteCatalyst/Omniture tracking to pages and DOM elements.
+Provides a convenient way for developers to add SiteCatalyst/Omniture tracking to pages and DOM elements. This is a modification of Jaime Bueza's plugin. More stripped down, and convienent for my use.
 
 ## jQuery Omniture Plugin API
 
@@ -19,31 +19,11 @@ Provides the capability to execute pseudo synchronous requests (img) to Omniture
 * <code>{ String } event</code> - The event you want to listen to on a particular node. eg/ "click", "hover", "mouseup", "keydown"
 * <code>{ Function} callback</code> - The callback you want executed that returns the metrics properties and sends them off to SiteCatalyst (Omniture).
 
-## Tutorial and Example Code
+## Example on how to use
 
 <pre>
   $(document).ready(function() {
-      var config = {
-        pageName: "DunderMifflin:Home"
-      };
-
-      var omniture = $(document).Omniture(config);
-
-      //sinatra-style + express-style routing!
       
-      omniture.view("index.html", function() {
-        return { pageName: "DunderMifflin:Home", eVar1: "This is eVar1",eVar2: "This is eVar2" };
-      });
-      omniture.view("about", function() {
-        return { pageName: "DunderMifflin:About", eVar1: "This is eVar1",eVar2: "This is eVar2" };
-      });
-      omniture.view("register", function() {
-        return { pageName: "DunderMifflin:Register", eVar1: "This is eVar1",eVar2: "This is eVar2" };
-      });
-
-      omniture.link($("a"), "click", function(element) {
-        return { event2: "login", prop3: element.attr('title'), eVar4: "evar4" };
-      });
   });
 </pre>
 ## MIT Licence
