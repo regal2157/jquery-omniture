@@ -8,29 +8,46 @@ Provides a convenient way for developers to add SiteCatalyst/Omniture tracking t
 
 Provides the capability to apply pageview metrics to a particular route. This is a facade for <code>s.t()</code>.
 
-* <code>{ String } route</code> - A human readable string representing the location you want tracked. This is a string but gets transformed into a regex.
-* <code>{ Function } callback</code> - The callback you want executed that returns the metrics properties and sends them off to SiteCatalyst (Omniture).
+* <code>{ obj } options
 
 ### omniture.link()
 
 Provides the capability to execute pseudo synchronous requests (img) to Omniture. This is a facade for <code>s.tl()</code>.
 
-* <code>{ String | DOM Element } element</code> - The targeted node you want to listen to. eg/ $("button") or "#btn-register"
-* <code>{ String } event</code> - The event you want to listen to on a particular node. eg/ "click", "hover", "mouseup", "keydown"
-* <code>{ Function} callback</code> - The callback you want executed that returns the metrics properties and sends them off to SiteCatalyst (Omniture).
+* <code> @param { obj } linkConfig
+* <code> @param { string } linkName
+* <code> @param { string } linkType : options are e, o, d [exit, other, download]
 
 ## Example on how to use
 
 <pre>
   $(document).ready(function() {
-      
+    var omniture = $.omniture();
+
+    $('#link1').click(function(){
+      var options = {
+        pageName : "about",
+        prop4 : "value",
+        channel : "PA US"
+      }
+      omniture.view( options );
+    });
+
+    $('#link2').click(function(){
+      var options = {
+        prop2 : "value",
+        eVar23 : "share button"
+      }
+      omniture.link( options, 'Link Name', 'o');
+    });
   });
 </pre>
 ## MIT Licence
 
 jQuery Omniture Plugin
 
-Copyright (c) 2010 Jaime Bueza
+Copyright (c) 2012 John O'Connell
+Old version - Copyright (c) 2010 Jaime Bueza
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

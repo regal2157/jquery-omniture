@@ -14,7 +14,10 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
   <script src="js/jquery.omniture.js"></script>
   <script>
-  // Set up the omniture variable
+  /* How you trigger the event is up to you! */
+  // Set up the omniture variable, you can pass config options in like so..
+  // omnitureOptions = { pageName : "about", server = "value" }
+  // var omniture = $.omniture( omnitureOptions );
   var omniture = $.omniture();
 
   /* This section is for tracking page views. Good for AJAX pages that are loaded
@@ -35,9 +38,8 @@
       prop2 : "value",
       eVar23 : "share button"
     }
+    omniture.link( options, 'Link Name', 'o');
   });
-
-  omniture.link( options, 'Link Name', 'o');
   </script>
 </body>
 </html>
